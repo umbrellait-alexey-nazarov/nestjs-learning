@@ -12,7 +12,7 @@
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start:prod": "NODE_ENV=production node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -24,6 +24,7 @@
     "@nestjs/common": "^7.6.15",
     "@nestjs/core": "^7.6.15",
     "@nestjs/platform-express": "^7.6.15",
+    "module-alias": "^2.2.2",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.6"
@@ -64,6 +65,9 @@
     "collectCoverageFrom": [
       "**/*.(t|j)s"
     ],
+    "_moduleAliases": {
+      "@app": "./dist"
+    },
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   }
