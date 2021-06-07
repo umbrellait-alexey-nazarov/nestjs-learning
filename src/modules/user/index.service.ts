@@ -71,4 +71,9 @@ export class UserService {
             }
         }
     }
+
+    async findById(id: string | Types.ObjectId): Promise<User> {
+        const user = await this.userModel.findById(new Types.ObjectId(id));
+        return user.toObject();
+    }
 }
