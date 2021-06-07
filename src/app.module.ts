@@ -3,12 +3,12 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TagModule } from '@app/modules/tag/index.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { UserModule } from './modules/user/index.module';
+
+const DB_URI: string = process.env.DB_URI;
 
 @Module({
-  imports: [
-    TagModule,
-    MongooseModule.forRoot('mongodb://127.0.0.1:27020/nest'),
-  ],
+  imports: [TagModule, MongooseModule.forRoot(DB_URI), UserModule],
   controllers: [AppController],
   providers: [AppService],
 })

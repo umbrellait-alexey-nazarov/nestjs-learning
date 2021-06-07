@@ -1,4 +1,4 @@
-import { Tag, TagSchema } from '@app/modules/tag/tagSchema';
+import { Tag, TagSchema } from '@app/modules/tag/schemas/tag.schema';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TagController } from './index.controller';

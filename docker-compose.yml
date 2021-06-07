@@ -1,0 +1,25 @@
+version: '3'
+
+services: 
+    backend:
+        build: ./
+        container_name: backend-nest
+        command: npm run start:dev
+        volumes: 
+            - ./src:/usr/src/app/src 
+        ports: 
+            - "3000:3000"
+        environment: 
+            - DB_URI=mongodb://mongo:27017/nest
+        restart: unless-stopped
+
+    mongo:
+        image: mongo:latest
+        container_name: nest-db
+        volumes:
+            - type: volume
+              source: mongodb_nest
+              target: /data/db
+
+volumes: 
+    mongodb_nest:

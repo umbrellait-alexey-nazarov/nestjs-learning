@@ -1,8 +1,8 @@
-import { Tag, TagDocument } from '@app/modules/tag/tagSchema';
+import { Tag, TagDocument } from '@app/modules/tag/schemas/tag.schema';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CreateTagDto } from './tag.dto';
+import { CreateTagDto } from './dto/tag.dto';
 
 @Injectable()
 export class TagService {
@@ -15,7 +15,6 @@ export class TagService {
 
   async findAll(): Promise<Tag[]> {
     const result = await this.tagModel.find();
-    console.log();
     return result;
   }
 }
