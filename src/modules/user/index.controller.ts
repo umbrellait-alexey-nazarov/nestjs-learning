@@ -2,13 +2,10 @@ import {
   Body,
   Controller,
   Get,
-  HttpException,
-  HttpStatus,
   Post,
   Put,
   UseGuards,
   UsePipes,
-  ValidationPipe,
 } from '@nestjs/common';
 import { createUserDto } from './dto/createUser.dto';
 import { LoginUserDto } from './dto/loginUser.dto';
@@ -18,13 +15,15 @@ import { User } from './decorators/user.decorator';
 import { User as UserClass } from './schemas/user.schema';
 import { AuthGuard } from './guards/auth.guard';
 import { UpdateUserDto } from './dto/updateUser.dto';
+import { Types } from 'mongoose';
+import { BackendValidationPipe } from '@app/shared/pipes/backend.validation.pipe';
 
 @Controller()
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post('users')
-  @UsePipes(new ValidationPipe())
+  @UsePipes(new BackendValidationPipe())
   async createUser(
     @Body() createUserDto: createUserDto,
   ): Promise<UserResponseInterface> {
@@ -33,7 +32,7 @@ export class UserController {
   }
 
   @Post('users/login')
-  @UsePipes(new ValidationPipe())
+  @UsePipes(new BackendValidationPipe())
   async login(
     @Body() loginUserDto: LoginUserDto,
   ): Promise<UserResponseInterface> {
@@ -49,11 +48,11 @@ export class UserController {
 
   @Put('user')
   @UseGuards(AuthGuard)
-  async updateUser(
+  async updateCurrentUser(
     @Body() updateUserDto: UpdateUserDto,
-    @User() user: UserClass,
+    @User('_id') userId: Types.ObjectId,
   ): Promise<UserResponseInterface> {
-    const result = await this.userService.updateUser(user._id, updateUserDto);
+    const result = await this.userService.updateUser(userId, updateUserDto);
     return this.userService.buildUserResponse(result);
   }
 }

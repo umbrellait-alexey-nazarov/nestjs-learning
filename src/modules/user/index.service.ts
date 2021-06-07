@@ -14,12 +14,12 @@ import { UpdateUserDto } from './dto/updateUser.dto';
 export class UserService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  async hashPassword(password: string): Promise<string> {
+  private async hashPassword(password: string): Promise<string> {
     const result = await hash(password, 10);
     return result;
   }
 
-  async comparePassword(
+  private async comparePassword(
     password: string,
     entirePassword: string,
   ): Promise<boolean> {
@@ -47,7 +47,7 @@ export class UserService {
     return (await newUser.save()).toObject();
   }
 
-  generateJwt(user: User): string {
+  private generateJwt(user: User): string {
     const token = sign(
       {
         _id: user._id,
